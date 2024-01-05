@@ -8,7 +8,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Videocall by Agora',
-      debugShowCheckedModeBanner: false,
+      //debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.amber,
         scaffoldBackgroundColor: Colors.white,
@@ -26,7 +26,22 @@ class App extends StatelessWidget {
           ),
         ),
       ),
+      builder: (context, child) => _unfocusAction(child: child!),
       home: const ChatScreen(),
+    );
+  }
+}
+
+class _unfocusAction extends StatelessWidget {
+  const _unfocusAction({super.key, required this.child});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: child,
     );
   }
 }
